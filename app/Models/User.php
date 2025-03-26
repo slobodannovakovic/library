@@ -53,4 +53,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class)
+                    ->withPivot('date_borrowed', 'date_returned');
+    }
 }

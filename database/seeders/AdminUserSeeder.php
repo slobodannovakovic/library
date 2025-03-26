@@ -18,5 +18,11 @@ class AdminUserSeeder extends Seeder
             'email' => 'miroslav@mrcajevci.rs',
             'role_id' => 1
         ]);
+
+        User::factory()->create([
+            'name' => 'Veliki Štrumpf',
+            'email' => 'veliki@strumpf.rs',
+            'role_id' => 1
+        ]);
     }
 }
