@@ -12,7 +12,7 @@ class Book extends Model
     protected $fillable = [
         'title',
         'author',
-        'discription',
+        'description',
         'language',
         'dimensions',
         'borrowed'
@@ -36,5 +36,14 @@ class Book extends Model
     public function scopeAvailable($query)
     {
         return $query->where('borrowed', 0);
+    }
+
+    public function scopeBorrowed($query)
+    {
+        return $query->whereHas('users', function ($q) {
+            $q->where('borrowed', 1);
+        })->with(['users' => function ($q) {
+            $q->withPivot('date_borrowed', 'date_returned');
+        }]);
     }
 }

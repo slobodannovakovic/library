@@ -11,6 +11,10 @@ class Role extends Model
 {
     use HasApiTokens, HasFactory;
 
+    public const ROLE_ADMIN = 'admin';
+
+    public const ROLE_CUSTOMER = 'customer';
+
     protected $fillable = ['name', 'label'];
 
     public function users(): HasMany

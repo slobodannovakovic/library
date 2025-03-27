@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Resources\BookResource;
 use App\Http\Requests\BooksBorrowRequest;
 use App\Http\Resources\BorrowedBooksResource;
+use App\Http\Resources\BorrowedBooksResourceCollection;
 
 class BooksBorrowController extends Controller
 {
@@ -57,9 +58,23 @@ class BooksBorrowController extends Controller
     public function list(Request $request): JsonResponse
     {
         $user = User::find($request->user()->id);
+        $books = $user->books()->paginate(Book::PAGINATION_COUNT);
 
         return response()->json(
-            BorrowedBooksResource::collection($user->books)
+            (new BorrowedBooksResourceCollection($books))
+                ->response()
+                ->getData(true)
+        );
+    }
+
+    public function adminList(Request $request): JsonResponse
+    {
+        $borrowedBooks = Book::borrowed()->paginate(Book::PAGINATION_COUNT);
+        
+        return response()->json(
+            (new BorrowedBooksResourceCollection($borrowedBooks))
+                ->response()
+                ->getData(true)
         );
     }
 }

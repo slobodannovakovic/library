@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Resources\BookResource;
-use App\Http\Resources\BookResourceCollection;
+use Exception;
+use Illuminate\Http\JsonResponse;
 
 class BooksController extends Controller
 {
@@ -30,16 +32,24 @@ class BooksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BookStoreRequest $request): JsonResponse
     {
-        //
+        try {
+            $book = Book::create($request->all());
+        } catch (Exception $exception) {
+            return response()->json(['message' => 'Book already exists.'], 422);
+        }
+
+        $book->refresh();
+
+        return response()->json(new BookResource($book));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Book $book): JsonResponse
     {
-        return new BookResource($book);
+        return response()->json(new BookResource($book));
     }
 }

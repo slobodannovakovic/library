@@ -37,6 +37,8 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public const ADMIN_ROLE_NAME = 'admin';
+
     /**
      * Get the attributes that should be cast.
      *
