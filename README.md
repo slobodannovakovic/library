@@ -24,3 +24,7 @@ To test scheduling:
 
 Postman
 - Postman json collection file is in the root of the project Library.postman_collection.json
+
+Todo
+- implement chaching
+- write unit tests
