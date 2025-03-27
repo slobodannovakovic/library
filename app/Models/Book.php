@@ -20,7 +20,7 @@ class Book extends Model
 
     public const PAGINATION_COUNT = 10;
 
-    public const MAX_DAYS_TO_BORROW = 30;
+    public const MAX_DAYS_TO_BORROW = 30;//TODO:ovo u neki config izbaciti
 
     public function users()
     {

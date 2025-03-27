@@ -62,4 +62,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Book::class)
                     ->withPivot('date_borrowed', 'date_returned');
     }
+
+    public function notReturnedOnTimeBooks()
+    {
+        return $this->belongsToMany(Book::class)
+                    ->wherePivot('date_borrowed', '<', now()->subDays(Book::MAX_DAYS_TO_BORROW))//Book::MAX_DAYS_TO_BORROW
+                    ->wherePivotNull('date_returned')
+                    ->withPivot('date_borrowed', 'date_returned');
+    }
 }
