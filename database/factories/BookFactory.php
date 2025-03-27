@@ -25,12 +25,13 @@ class BookFactory extends Factory
             '13.97 x 21.59 cm', 
             '15.24 x 22.86 cm'
         ];
+        $languages = ['English', 'Serbian', 'Franch'];
 
         return [
             'title' => fake()->sentence(4, true),
             'author' => fake()->name(),
             'description' => fake()->paragraph(3),
-            'language' => array_rand(['English', 'Serbian', 'Franch']),
+            'language' => $languages[array_rand($languages)],
             'dimensions' => $dimensions[array_rand($dimensions)],
             'borrowed' => rand(0,1),
         ];

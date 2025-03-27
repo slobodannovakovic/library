@@ -67,7 +67,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function forgotPassword(Request $request)
+    public function forgotPassword(Request $request): JsonResponse
     {
         $fields = $request->validate([
             'email' => 'required|email|exists:users,email',
@@ -83,7 +83,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Password reset link sent.']);
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $request): JsonResponse
     {
         $fields = $request->validate([
             'email' => ['required', 'email', 'exists:users,email'],

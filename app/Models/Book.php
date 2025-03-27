@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Book extends Model
 {
@@ -18,6 +18,10 @@ class Book extends Model
         'borrowed'
     ];
 
+    public const PAGINATION_COUNT = 10;
+
+    public const MAX_DAYS_TO_BORROW = 30;
+
     public function users()
     {
         return $this->belongsToMany(User::class)
@@ -27,5 +31,10 @@ class Book extends Model
     public function isBorrowed(): bool
     {
         return $this->borrowed !== 0;
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('borrowed', 0);
     }
 }
