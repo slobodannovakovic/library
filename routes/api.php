@@ -9,8 +9,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BooksBorrowController;
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login'])
+    ->middleware('throttle:auth');
+Route::post('register', [AuthController::class, 'register'])
+    ->middleware('throttle:auth');
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('reset-password', [AuthController::class, 'resetPassword'])
     ->middleware('signed')

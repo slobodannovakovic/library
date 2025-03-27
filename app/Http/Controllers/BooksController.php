@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BookCreatedEvent;
 use App\Http\Requests\BookStoreRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
@@ -41,6 +42,8 @@ class BooksController extends Controller
         }
 
         $book->refresh();
+
+        BookCreatedEvent::dispatch($book);
 
         return response()->json(new BookResource($book));
     }
