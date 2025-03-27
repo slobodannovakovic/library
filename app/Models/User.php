@@ -39,6 +39,8 @@ class User extends Authenticatable
 
     public const ADMIN_ROLE_NAME = 'admin';
 
+    public const PENALTIES_MAX = 10;
+
     /**
      * Get the attributes that should be cast.
      *

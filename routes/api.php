@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BooksBorrowController;
+use App\Http\Middleware\BookBorrowMiddleware;
 
 Route::post('login', [AuthController::class, 'login'])
     ->middleware('throttle:auth');
@@ -29,7 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('books', [BooksController::class, 'store'])
         ->can('create', Book::class);
 
-    Route::post('books/borrow', [BooksBorrowController::class, 'borrow']);
+    Route::post('books/borrow', [BooksBorrowController::class, 'borrow'])
+        ->middleware(BookBorrowMiddleware::class);
     Route::patch('books/return', [BooksBorrowController::class, 'return']);
     Route::get('books/borrow/list', [BooksBorrowController::class, 'list']);
     Route::get('books/borrow/admin-list', [BooksBorrowController::class, 'adminList'])
